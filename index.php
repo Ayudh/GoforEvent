@@ -233,7 +233,7 @@
 <div class="empty-account-page">
     <div class="container">
         <div class="row congratz">
-            <h1>Your count has been created!</h1><i></i>
+            <h1>Your account has been created!</h1><i></i>
             <h2 id="pathName"><i></i></h2>
         </div>
         <div class="row message">
