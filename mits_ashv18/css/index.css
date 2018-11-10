@@ -1,0 +1,32 @@
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+#profile-image {
+  height: 40px;
+  margin: 10px;
+  border-radius: 50%;
+}
+
+.nav-wrapper {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+nav ul a:hover {
+  background-color: rgba(0,0,0,0);
+}
+
+.row {
+  margin-bottom: 0;
+}
+
+.container {
+  margin-top: 50px;
+}
+
+@media only screen and (min-width: 960px) {
+  .flow-text {
+      font-size: 1rem;
+  }
+}
