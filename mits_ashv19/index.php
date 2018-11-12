@@ -63,12 +63,15 @@ function getCallbackUrl()
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="./css/index.css">
   <meta name="theme-color" content="#F44336" />
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
   <!-- this meta viewport is required for BOLT //-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
   <!-- BOLT Sandbox/test //-->
-  <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script>
+  <!-- <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script> -->
 <!-- BOLT Production/Live //-->
-<!-- <script id="bolt" src="https://checkout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script> -->
+<script id="bolt" src="https://checkout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script>
 </head>
 
 <body>
@@ -436,7 +439,7 @@ function getCallbackUrl()
     };
     firebase.initializeApp(config);
   </script>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="./js/index.js"></script>
 </body>
