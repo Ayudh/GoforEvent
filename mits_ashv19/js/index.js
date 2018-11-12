@@ -8,8 +8,8 @@ $('select').formSelect();
   var instance = M.Collapsible.init(elem, {
     accordion: false
   });
-  // instance.open(0);
-  // instance.open(1);
+  instance.open(0);
+  instance.open(1);
 })();
 
 let signInButton = $('#sign-in-button');
