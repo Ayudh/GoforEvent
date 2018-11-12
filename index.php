@@ -1,5 +1,5 @@
 <?php
-header("Location: http://www.goforevent.com/mits_ashv18"); /* Redirect browser */
+header("Location: http://www.goforevent.com/mits_ashv19"); /* Redirect browser */
 exit();
 
 ?>
