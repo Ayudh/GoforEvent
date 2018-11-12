@@ -1,5 +1,5 @@
 <?php
-require_once './vendor/autoload.php';
+require_once '../vendor/autoload.php';
 // Create and configure Slim app
 $config = ['settings' => [
     'addContentLengthHeader' => false,
