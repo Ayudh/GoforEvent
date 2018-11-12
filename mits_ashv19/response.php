@@ -189,14 +189,14 @@ if (isset($postdata ['key'])) {
   <h2>Thank you for registering through GoforEvent.  </h2><br/>
 <div style='font-size:20px;'>
 <span>Your Registered ASHVId is<b> ASHV2K19<span>".$id. "</b><br/>
-Make sure that you produce this QRCode at the time of verification in PIXEL2K18.<br/>
+Make sure that you produce this QRCode at the time of verification in ASHV2K19.<br/>
 </div><br/>
 <div>
 <img src='http://www.goforevent.com/qrget.php?email=$email' width='150' height='150'>
 </div>
 <a href='http://www.goforevent.com/qrget.php?email=$email' download='goforevent.jpg'>Please download the QRCode using this link.</a>
 <p>You can also downlaod QRCode in your dashboard.</p>
-<b style='font-size:20px;'>You can view your event details in PIXEL2K18 website dashboard.</b><br><br>
+<b style='font-size:20px;'>You can view your event details in ASHV2K19 website dashboard.</b><br><br>
 <a href='http://www.goforevent.com/mits_ashv19/login/'>
 <button style='background-color:#FF5335;border-radius:10px;border-color:#FF5335;padding:10px 10px;font-size:15px;'><b>Your Dashboard</b></button></a><br><br>
 <span style='font-size:20px'> To host your event or to view similar events visit:</span><br><br> <a href='http://www.goforevent.com'>
