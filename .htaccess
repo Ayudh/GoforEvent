@@ -1,4 +1,4 @@
 RewriteEngine On 
 RewriteCond %{SERVER_PORT} 80
 RewriteCond %{HTTP_HOST} ^(www\.)?goforevent\.com
-RewriteRule ^(.*)$ https://www.coolexample.com/$1 [R,L]
+RewriteRule ^(.*)$ https://www.goforevent.com/$1 [R,L]
