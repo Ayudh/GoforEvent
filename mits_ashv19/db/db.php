@@ -2,14 +2,14 @@
 
 class db
 {
-  // private $host="localhost";
-  // private $user="u782278152_gfe";
-  // private $pwd="Goforevent@2k18";
-  // private $dbname="u782278152_ieee";
   private $host="localhost";
-  private $user="mysqladmin";
-  private $pwd="mysqladmin";
-  private $dbname="cse_ashv18";
+  private $user="u616229738_event";
+  private $pwd="Goforevent@1";
+  private $dbname="u616229738_gofor";
+  // private $host="localhost";
+  // private $user="mysqladmin";
+  // private $pwd="mysqladmin";
+  // private $dbname="cse_ashv18";
 
   public function connect()
   {
