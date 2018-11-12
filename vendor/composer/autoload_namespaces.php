@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Pimple' => array($vendorDir . '/pimple/pimple/src'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
     'BaconQrCode' => array($vendorDir . '/bacon/bacon-qr-code/src'),
 );
