@@ -143,7 +143,7 @@ function updateAmount() {
 
 $('#complete-form').submit(function (evt) {
   evt.preventDefault();
-  console.log('form submitted');
+  //console.log('form submitted');
 
   if (firebase.auth().currentUser == null) {
     toast('Please login');
@@ -195,15 +195,15 @@ $('#complete-form').submit(function (evt) {
     dataType: 'json',
     success: function (json) {
       if (json['error']) {
-        console.log('error success');
+        //console.log('error success');
       } else if (json['success']) {
-        console.log(json['success']);
-        console.log(json['amount']);
+        //console.log(json['success']);
+        //console.log(json['amount']);
         launchBOLT(txnid, json['success'], json['amount'], productInfo);
       }
     },
     error: function () {
-      console.log('error ajax');
+      //console.log('error ajax');
     }
   });
 
@@ -226,7 +226,7 @@ function launchBOLT(txnid, hash, amount, productInfo)
 	furl: $('#surl').val(),
 	mode: 'dropout'
 },{ responseHandler: function(BOLT){
-  console.log( BOLT.response.txnStatus );
+  //console.log( BOLT.response.txnStatus );
 	if(BOLT.response.txnStatus != 'CANCEL')
 	{
 		//Salt is passd here for demo purpose only. For practical use keep salt at server side only.
