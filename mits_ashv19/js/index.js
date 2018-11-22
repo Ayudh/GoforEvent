@@ -86,25 +86,25 @@ function getProfilePicUrl() {
   return firebase.auth().currentUser.photoURL || './images/profile_placeholder.png';
 }
 
-// Payment Functionality 
+// Payment Functionality
 
 function increment(n) {
-  let currValue = parseInt($('#subevent-' + n).text());
-  if (currValue == 10) {
+  let currValue = parseInt($('#mainevent-' + n).text());
+  if ((n == 1 && currValue == 1) || ((n==2||n==3||n==7||n==8) && currValue ==2) || ((n==4||n==9) && currValue == 4) || ((n==5||n==6) && currValue == 8)) {
     toast("Not possible");
     return;
   }
-  $('#subevent-' + n).text(currValue + 1);
+  $('#mainevent-' + n).text(currValue + 1);
   updateAmount();
 }
 
 function decrement(n) {
-  let currValue = parseInt($('#subevent-' + n).text());
+  let currValue = parseInt($('#mainevent-' + n).text());
   if (currValue == 0) {
     toast("Not possible");
     return;
   }
-  $('#subevent-' + n).text(currValue - 1);
+  $('#mainevent-' + n).text(currValue - 1);
   updateAmount();
 }
 
@@ -119,20 +119,23 @@ $('input[type="checkbox"]').click(function () {
 });
 
 function updateAmount() {
-  let prices = [1200, 500, 350, 350, 300, 1500, 1300, 1300, 1000, 700, 1300, 2000, 300, 500, 300];
+  let prices = [1500, 1300, 1300, 1000, 700, 1300];
   let amount = 0;
-  for (let index = 1; index <= 15; index++) {
-    if ($('#event-' + index).is(':checked')) {
-      amount = amount + prices[index - 1];
-    }
-  }
-  for (let index = 1;index<= 5;index++) {
-    let curr = parseInt($('#subevent-'+index).text());
-    if (curr != 0) {
-      if (curr == 1)
-        amount = amount + 500;
-      else
-        amount = amount + 250 * curr;
+  for (let index = 1;index<=16;index++) {
+    if (index <= 9) {
+      let curr = parseInt($('#mainevent-'+index).text());
+      if (index == 1 && curr != 0) {
+        amount = amount + 1300;
+      } else {
+        amount = amount + 400 * curr;
+      }
+    } else if (index<=15) {
+      if ($('#mainevent-' + index).is(':checked')) {
+        amount = amount + prices[index - 10];
+      }
+    } else {
+      let curr = parseInt($('#mainevent-'+index).text());
+      amount = amount + 400 * curr;
     }
   }
   $('#final-amount').text(amount);
@@ -160,14 +163,20 @@ $('#complete-form').submit(function (evt) {
   productInfo += $('input[name=gender]:checked').val()+'#';
   productInfo += $('#course :selected').text()+'#';
 
-  for (let index = 1;index<=15;index++) {
-    if ($('#event-' + index).is(':checked'))
-      productInfo += '1#'
-    else
-      productInfo += '0#';
-  }
-  for (let index = 1;index<=5;index++) {
-    productInfo += $('#subevent-'+index).text() + '#';
+  productInfo += $('#rollno').val()+'#';
+  productInfo += $('#campusambasdor').val()+'#';
+
+  for (let index = 1;index <= 16;index++) {
+    if (index <= 9) {
+      productInfo += $('#mainevent-'+index).text() + '#';
+    } else if (index<=15) {
+      if ($('#mainevent-' + index).is(':checked'))
+        productInfo += '1#'
+      else
+        productInfo += '0#';
+    } else {
+      productInfo += $('#mainevent-'+index).text() + '#';
+    }
   }
 
   $.ajax({
@@ -205,7 +214,7 @@ function launchBOLT(txnid, hash, amount, productInfo)
 {
 	bolt.launch({
 	key: 'lH3qHLzS',
-	txnid: txnid, 
+	txnid: txnid,
 	hash: hash,
 	amount: amount,
 	firstname: $('#name').val(),
@@ -215,9 +224,9 @@ function launchBOLT(txnid, hash, amount, productInfo)
 	udf5: $('#udf5').val(),
 	surl : $('#surl').val(),
 	furl: $('#surl').val(),
-	mode: 'dropout'	
+	mode: 'dropout'
 },{ responseHandler: function(BOLT){
-  console.log( BOLT.response.txnStatus );	
+  console.log( BOLT.response.txnStatus );
 	if(BOLT.response.txnStatus != 'CANCEL')
 	{
 		//Salt is passd here for demo purpose only. For practical use keep salt at server side only.
@@ -235,7 +244,7 @@ function launchBOLT(txnid, hash, amount, productInfo)
 		'<input type=\"hidden\" name=\"hash\" value=\"'+BOLT.response.hash+'\" />' +
 		'</form>';
 		var form = jQuery(fr);
-		jQuery('body').append(form);								
+		jQuery('body').append(form);
 		form.submit();
 	}
 },

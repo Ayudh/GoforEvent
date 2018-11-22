@@ -12,7 +12,7 @@
 
   // $stmt = $conn->query($sql);
       $result = $stmt->fetchAll();
-      $x = "people_id.people_name.people_email.people_amount.people_mobile.people_branch.people_gender.people_college.people_date.people_txid.people_status.events_workshop.events_paper.events_poster.events_project.events_quiz.events_cricket.events_volleym.events_kabaddi.events_football.events_tennikoit.events_volleyw.events_flash.events_dance.events_treasure.events_slowbike.events_larynx.events_dancewance.events_picorama.events_theatre.events_haute";
+      $x = "people_id.people_name.people_email.people_roll.people_campusid.people_amount.people_mobile.people_branch.people_gender.people_college.people_date.people_txid.people_status.events_workshop.events_paper.events_poster.events_project.events_larynx.events_dancewance.events_artsalad.events_theatre.events_haute.events_cricket.events_volleym.events_kabaddi.events_football.events_tennikoit.events_volleyw.events_accom";
      ?>
 	 <body style="background-color:#2C3E50;color:white">
 	 <h1 style="text-align:center;font-size:50px;margin-top:30px;font-family:arial"> Candidates List<h1>
@@ -32,6 +32,8 @@
 		<th>ASHVId</th>
 		<th>Name</th>
 		<th>Email</th>
+		<th>Roll No</th>
+		<th>Campus Amb. ID</th>
 		<th>Amount</th>
 		<th>Mobile</th>
 		<th>Branch</th>
@@ -45,22 +47,21 @@
 		<th>Paper Presentation</th>
 		<th>Poster Presentation</th>
 		<th>Project Expo</th>
-		<th>Quizzing</th>
+
+		<th>Larynx Warz</th>
+		<th>Dance Wance</th>
+		<th>Art Salad</th>
+		<th>Theatre</th>
+		<th>Haute Couture(Fashion)</th>
+
 		<th>Cricket(Men)</th>
 		<th>Volley ball(Men)</th>
 		<th>Kabbadi(Men)</th>
 		<th>Football(Men)</th>
 		<th>Tennikoit(Men)</th>
 		<th>Volleyball(Women)</th>
-		<th>Flash Mob</th>
-		<th>Dance Battle</th>
-		<th>Treasure Hunt</th>
-		<th>Slow Bike Race</th>
-		<th>Larynx Warz</th>
-		<th>Dance Wance</th>
-		<th>Pic O Rama</th>
-		<th>Theatre</th>
-		<th>Haute Couture(Fashion)</th>
+		<th>Accomodation</th>
+
 
 	 </tr>
 	 <?PHP

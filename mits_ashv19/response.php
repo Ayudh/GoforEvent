@@ -39,7 +39,7 @@ if (isset($postdata ['key'])) {
 
 		if (count($result) == 0) {
       
-      $sql = "INSERT INTO `ashv_cse_people`( `people_name`, `people_email`, `people_mobile`, `people_branch`, `people_gender`, `people_college`, `people_date`, `people_txid`, `people_status`) VALUES (:people_name,:people_email, :people_mobile, :people_branch, :people_gender, :people_college, :people_date, :people_txid, :people_status)";
+      $sql = "INSERT INTO `ashv_cse_people`( `people_name`, `people_email`, `people_roll`, `people_campusid`, `people_mobile`, `people_branch`, `people_gender`, `people_college`, `people_date`, `people_txid`, `people_status`) VALUES (:people_name,:people_email,:people_roll, :people_campusid, :people_mobile, :people_branch, :people_gender, :people_college, :people_date, :people_txid, :people_status)";
 
   try {
     $db = new db();
@@ -53,6 +53,8 @@ if (isset($postdata ['key'])) {
     $stmt->bindParam(':people_branch', $info[2]);
     $stmt->bindParam(':people_gender', $info[1]);
     $stmt->bindParam(':people_college', $info[0]);
+    $stmt->bindParam(':people_roll', $info[3]);
+    $stmt->bindParam(':people_campusid', $info[4]);
     $stmt->bindParam(':people_date', $date);
     $stmt->bindParam(':people_txid', $txnid);
     $stmt->bindParam(':people_status', $status);
@@ -62,7 +64,7 @@ if (isset($postdata ['key'])) {
     echo $e->getMessage();
   }
 
-  $sql = "INSERT INTO `ashv_cse_events`(`people_email`, `events_workshop`, `events_paper`, `events_poster`, `events_project`, `events_quiz`, `events_cricket`, `events_volleym`, `events_kabaddi`, `events_football`, `events_tennikoit`, `events_volleyw`, `events_flash`, `events_dance`, `events_treasure`, `events_slowbike`, `events_larynx`, `events_dancewance`, `events_picorama`, `events_theatre`, `events_haute`, `people_amount`) VALUES (:people_email, :events_workshop, :events_paper, :events_poster, :events_project, :events_quiz, :events_cricket, :events_volleym, :events_kabaddi, :events_football, :events_tennikoit, :events_volleyw, :events_flash, :events_dance, :events_treasure, :events_slowbike, :events_larynx, :events_dancewance, :events_picorama, :events_theatre, :events_haute, :people_amount)";
+  $sql = "INSERT INTO `ashv_cse_events`(`people_email`, `events_workshop`, `events_paper`, `events_poster`, `events_project`, `events_cricket`, `events_volleym`, `events_kabaddi`, `events_football`, `events_tennikoit`, `events_volleyw`,  `events_larynx`, `events_dancewance`, `events_artsalad`, `events_theatre`, `events_haute`,`events_accom`, `people_amount`) VALUES (:people_email, :events_workshop, :events_paper, :events_poster, :events_project, :events_cricket, :events_volleym, :events_kabaddi, :events_football, :events_tennikoit, :events_volleyw, :events_larynx, :events_dancewance, :events_artsalad, :events_theatre, :events_haute,:events_accom, :people_amount)";
 
   try {
 
@@ -71,38 +73,36 @@ if (isset($postdata ['key'])) {
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':people_email', $email);
 
-    $stmt->bindParam(':events_workshop', $info[3]);
-    $stmt->bindParam(':events_paper', $info[4]);
-    $stmt->bindParam(':events_poster', $info[5]);
-    $stmt->bindParam(':events_project', $info[6]);
-    $stmt->bindParam(':events_quiz', $info[7]);
-    $stmt->bindParam(':events_cricket', $info[8]);
-    $stmt->bindParam(':events_volleym', $info[9]);
-    $stmt->bindParam(':events_kabaddi', $info[10]);
-    $stmt->bindParam(':events_football', $info[11]);
-    $stmt->bindParam(':events_tennikoit', $info[12]);
-    $stmt->bindParam(':events_volleyw', $info[13]);
-    $stmt->bindParam(':events_flash', $info[14]);
-    $stmt->bindParam(':events_dance', $info[15]);
-    $stmt->bindParam(':events_treasure', $info[16]);
-    $stmt->bindParam(':events_slowbike', $info[17]);
-    $stmt->bindParam(':events_larynx', $info[18]);
-    $stmt->bindParam(':events_dancewance', $info[19]);
-    $stmt->bindParam(':events_picorama', $info[20]);
-    $stmt->bindParam(':events_theatre', $info[21]);
-    $stmt->bindParam(':events_haute', $info[22]);
+    $stmt->bindParam(':events_workshop', $info[5]);
+    $stmt->bindParam(':events_paper', $info[6]);
+    $stmt->bindParam(':events_poster', $info[7]);
+    $stmt->bindParam(':events_project', $info[8]);
+    $stmt->bindParam(':events_larynx', $info[9]);
+    $stmt->bindParam(':events_dancewance', $info[10]);
+    $stmt->bindParam(':events_artsalad', $info[11]);
+    $stmt->bindParam(':events_theatre', $info[12]);
+    $stmt->bindParam(':events_haute', $info[13]);
+    $stmt->bindParam(':events_cricket', $info[14]);
+    $stmt->bindParam(':events_volleym', $info[15]);
+    $stmt->bindParam(':events_kabaddi', $info[16]);
+    $stmt->bindParam(':events_football', $info[17]);
+    $stmt->bindParam(':events_tennikoit', $info[18]);
+    $stmt->bindParam(':events_volleyw', $info[19]);
+    $stmt->bindParam(':events_accom', $info[20]);
 
     $finalamount = 0;
-    $prices = [1200, 500, 350, 350, 300, 1500, 1300, 1300, 1000, 700, 1300, 2000, 300, 500, 300];
-    for ($i=3; $i < 18; $i++) {
-      $finalamount = $finalamount + $info[$i] * $prices[$i-3];
-    }
-    for ($i=18; $i < 23; $i++) {
-      if ($info[$i] != 0) {
-        if ($info[$i] == 1)
-          $finalamount = $finalamount + 500;
-        else
-          $finalamount = $finalamount + 250 * $info[$i];
+    $prices = [1500, 1300, 1300, 1000, 700, 1300];
+    for ($i=5; $i < 21; $i++) {
+      if ($i <= 13) {
+        if ($i == 5 && $info[$i] != 0) {
+          $finalamount = $finalamount + 1300;
+        } else {
+          $finalamount = $finalamount + 400 * $info[$i];
+        }
+      } elseif ($i <= 19) {
+        $finalamount = $finalamount + $info[$i] * $prices[$i-14];
+      } else {
+        $finalamount = $finalamount + $info[$i] * 400;
       }
     }
 
@@ -121,55 +121,53 @@ if (isset($postdata ['key'])) {
 
   $result = $stmt->fetchAll();
 
-  $x = "events_workshop.events_paper.events_poster.events_project.events_quiz.events_cricket.events_volleym.events_kabaddi.events_football.events_tennikoit.events_volleyw.events_flash.events_dance.events_treasure.events_slowbike.events_larynx.events_dancewance.events_picorama.events_theatre.events_haute";
+  $x = "events_workshop.events_paper.events_poster.events_project.events_larynx.events_dancewance.events_artsalad.events_theatre.events_haute.events_cricket.events_volleym.events_kabaddi.events_football.events_tennikoit.events_volleyw.events_accom";
 
   $arr1 = explode('.', $x);
 
-  for ($i = 3; $i < 23; $i++) {
-    $info[$i] = $info[$i] + $result[0][$arr1[$i-3]];
+  for ($i = 5; $i < 21; $i++) {
+    $info[$i] = $info[$i] + $result[0][$arr1[$i-5]];
   }
 
   $finalamount = 0;
-  $prices = [1200, 500, 350, 350, 300, 1500, 1300, 1300, 1000, 700, 1300, 2000, 300, 500, 300];
-  for ($i=3; $i < 18; $i++) {
-    $finalamount = $finalamount + $info[$i] * $prices[$i-3];
-  }
-  for ($i=18; $i < 23; $i++) {
-    if ($info[$i] != 0) {
-      if ($info[$i] == 1)
-        $finalamount = $finalamount + 500;
-      else
-        $finalamount = $finalamount + 250 * $info[$i];
+  $prices = [1500, 1300, 1300, 1000, 700, 1300];
+  for ($i=5; $i < 21; $i++) {
+    if ($i <= 13) {
+      if ($i == 5 && $info[$i] != 0) {
+        $finalamount = $finalamount + 1300;
+      } else {
+        $finalamount = $finalamount + 400 * $info[$i];
+      }
+    } elseif ($i <= 19) {
+      $finalamount = $finalamount + $info[$i] * $prices[$i-14];
+    } else {
+      $finalamount = $finalamount + $info[$i] * 400;
     }
   }
 
-  $sql = "UPDATE `ashv_cse_events` SET `events_workshop`=:events_workshop,`events_paper`=:events_paper,`events_poster`=:events_poster,`events_project`=:events_project,`events_quiz`=:events_quiz,`events_cricket`=:events_cricket,`events_volleym`=:events_volleym,`events_kabaddi`=:events_kabaddi,`events_football`=:events_football,`events_tennikoit`=:events_tennikoit,`events_volleyw`=:events_volleyw,`events_flash`=:events_flash,`events_dance`=:events_dance,`events_treasure`=:events_treasure,`events_slowbike`=:events_slowbike,`events_larynx`=:events_larynx,`events_dancewance`=:events_dancewance,`events_picorama`=:events_picorama,`events_theatre`=:events_theatre,`events_haute`=:events_haute,`people_amount`=:people_amount WHERE `people_email`=:people_email";
+  $sql = "UPDATE `ashv_cse_events` SET `events_workshop`=:events_workshop,`events_paper`=:events_paper,`events_poster`=:events_poster,`events_project`=:events_project,`events_cricket`=:events_cricket,`events_volleym`=:events_volleym,`events_kabaddi`=:events_kabaddi,`events_football`=:events_football,`events_tennikoit`=:events_tennikoit,`events_volleyw`=:events_volleyw,`events_larynx`=:events_larynx,`events_dancewance`=:events_dancewance,`events_artsalad`=:events_artsalad,`events_theatre`=:events_theatre,`events_haute`=:events_haute,`events_accom`=:events_accom,`people_amount`=:people_amount WHERE `people_email`=:people_email";
 
   $db = new db();
   $conn = $db->connect();
   $stmt = $conn->prepare($sql);
   $stmt->bindParam(':people_email', $email);
 
-  $stmt->bindParam(':events_workshop', $info[3]);
-  $stmt->bindParam(':events_paper', $info[4]);
-  $stmt->bindParam(':events_poster', $info[5]);
-  $stmt->bindParam(':events_project', $info[6]);
-  $stmt->bindParam(':events_quiz', $info[7]);
-  $stmt->bindParam(':events_cricket', $info[8]);
-  $stmt->bindParam(':events_volleym', $info[9]);
-  $stmt->bindParam(':events_kabaddi', $info[10]);
-  $stmt->bindParam(':events_football', $info[11]);
-  $stmt->bindParam(':events_tennikoit', $info[12]);
-  $stmt->bindParam(':events_volleyw', $info[13]);
-  $stmt->bindParam(':events_flash', $info[14]);
-  $stmt->bindParam(':events_dance', $info[15]);
-  $stmt->bindParam(':events_treasure', $info[16]);
-  $stmt->bindParam(':events_slowbike', $info[17]);
-  $stmt->bindParam(':events_larynx', $info[18]);
-  $stmt->bindParam(':events_dancewance', $info[19]);
-  $stmt->bindParam(':events_picorama', $info[20]);
-  $stmt->bindParam(':events_theatre', $info[21]);
-  $stmt->bindParam(':events_haute', $info[22]);
+  $stmt->bindParam(':events_workshop', $info[5]);
+  $stmt->bindParam(':events_paper', $info[6]);
+  $stmt->bindParam(':events_poster', $info[7]);
+  $stmt->bindParam(':events_project', $info[8]);
+  $stmt->bindParam(':events_larynx', $info[9]);
+  $stmt->bindParam(':events_dancewance', $info[10]);
+  $stmt->bindParam(':events_artsalad', $info[11]);
+  $stmt->bindParam(':events_theatre', $info[12]);
+  $stmt->bindParam(':events_haute', $info[13]);
+  $stmt->bindParam(':events_cricket', $info[14]);
+  $stmt->bindParam(':events_volleym', $info[15]);
+  $stmt->bindParam(':events_kabaddi', $info[16]);
+  $stmt->bindParam(':events_football', $info[17]);
+  $stmt->bindParam(':events_tennikoit', $info[18]);
+  $stmt->bindParam(':events_volleyw', $info[19]);
+  $stmt->bindParam(':events_accom', $info[20]);
 
   $stmt->bindParam(':people_amount', $finalamount);
 

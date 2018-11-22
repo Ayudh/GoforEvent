@@ -2,46 +2,43 @@
 
 if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0){
 	//Request hash
-	$contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';	
+	$contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 	if(strcasecmp($contentType, 'application/json') == 0){
     $data = json_decode(file_get_contents('php://input'));
     $data->key = 'lH3qHLzS';
     $data->salt = '8QcIRCig2E';
 
     $data->amount = 0;
-    $prices = [1200, 500, 350, 350, 300, 1500, 1300, 1300, 1000, 700, 1300, 2000, 300, 500, 300];
-
+    
     $events=explode('#',$data->pinfo);
-    // echo print_r($events);
-    // exit(0);
-
+    
     $productInfo = $data->pinfo;
-
-    for ($i=3; $i < 18; $i++) { 
-      $data->amount = $data->amount + $events[$i] * $prices[$i-3];
-    }
-    // echo $data->amount + '\n';
-    for ($i=18; $i < 23; $i++) { 
-      if ($events[$i] != 0) {
-        if ($events[$i] == 1)
-          $data->amount = $data->amount + 500;
-        else
-          $data->amount = $data->amount + 250 * $events[$i];
+    
+    $prices = [1500, 1300, 1300, 1000, 700, 1300];
+    for ($i=5; $i < 21; $i++) {
+      if ($i <= 13) {
+        if ($i == 5 && $events[$i] != 0) {
+          $data->amount = $data->amount + 1300;
+        } else {
+          $data->amount = $data->amount + 400 * $events[$i];
+        }
+      } elseif ($i <= 19) {
+        $data->amount = $data->amount + $events[$i] * $prices[$i-14];
+      } else {
+        $data->amount = $data->amount + $events[$i] * 400;
       }
     }
-    // echo $data->amount;
-    // exit(0);
 
 		$hash=hash('sha512', $data->key.'|'.$data->txnid.'|'.$data->amount.'|'.$data->pinfo.'|'.$data->fname.'|'.$data->email.'|||||'.$data->udf5.'||||||'.$data->salt);
 		$json=array();
 		$json['success'] = $hash;
 		$json['amount'] = $data->amount;
     	echo json_encode($json);
-	
+
 	}
 	exit(0);
 }
- 
+
 function getCallbackUrl()
 {
 	$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
@@ -114,9 +111,11 @@ function getCallbackUrl()
   <main>
     <form id="complete-form" action="#" method="get" class="col s12">
     <div class="container">
+    <h3 class="center">Ashv</h3>
+    <marquee>Participate to win prizes worth upto 5 Lakhs</marquee>
         <ul class="collapsible popout expandable z-depth-3">
           <li>
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i><span class="flow-text">Details</span></div>
+            <div class="collapsible-header"><i class="material-icons">details</i><span class="flow-text">Details</span></div>
             <div class="collapsible-body">
 
               <div class="row">
@@ -129,6 +128,18 @@ function getCallbackUrl()
                   <i class="material-icons prefix">mail</i>
                   <input disabled id="email" type="text" class="validate" value="Login mail">
                   <label for="email">Email ID</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col m6">
+                  <i class="material-icons prefix">code</i>
+                  <input id="rollno" name="rollno" type="text" required class="validate">
+                  <label for="rollno">Roll no.</label>
+                </div>
+                <div class="input-field col m6">
+                  <i class="material-icons prefix">account_balance</i>
+                  <input id="campusambasdor" type="text" class="validate" value="">
+                  <label for="campusambasdor">Campus Ambasdor ID</label>
                 </div>
               </div>
               <div class="row">
@@ -177,61 +188,114 @@ function getCallbackUrl()
             </div>
           </li>
           <li>
-            <div class="collapsible-header"><i class="material-icons">place</i><span class="flow-text">Events</span></div>
+            <div class="collapsible-header"><i class="material-icons">event_note</i><span class="flow-text">Events</span></div>
             <div class="collapsible-body">
               <div class="row valign-wrapper">
                 <div class="col s6 left">
                   <span class="flow-text">Workshop</span>
                 </div>
                 <div class="col s6 center">
-                  <label>
-                    <input type="checkbox" id="event-1" />
-                    <span></span>
-                  </label>
+                  <span class="custom-blue inline-block-display white-text">
+                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="decrement(1)"><i class="material-icons">remove</i></button>
+                    <span class="flow-text count-span center inline-block-display" id="mainevent-1">0</span>
+                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="increment(1)"><i class="material-icons">add</i></button>
+                  </span>
                 </div>
               </div>
               <div class="row valign-wrapper">
                 <div class="col s6 left">
-                  <span class="flow-text">Paper Presentation</span>
+                  <span class="flow-text">Paper Presentation (Max. 2 Persons)</span>
                 </div>
                 <div class="col s6 center">
-                  <label>
-                    <input type="checkbox" id="event-2" />
-                    <span></span>
-                  </label>
+                  <span class="custom-blue inline-block-display white-text">
+                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="decrement(2)"><i class="material-icons">remove</i></button>
+                    <span class="flow-text count-span center inline-block-display" id="mainevent-2">0</span>
+                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="increment(2)"><i class="material-icons">add</i></button>
+                  </span>
                 </div>
               </div>
               <div class="row valign-wrapper">
                 <div class="col s6 left">
-                  <span class="flow-text">Poster Presentation</span>
+                  <span class="flow-text">Poster Presentation (Max. 2 Persons)</span>
                 </div>
                 <div class="col s6 center">
-                  <label>
-                    <input type="checkbox" id="event-3" />
-                    <span></span>
-                  </label>
+                  <span class="custom-blue inline-block-display white-text">
+                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="decrement(3)"><i class="material-icons">remove</i></button>
+                    <span class="flow-text count-span center inline-block-display" id="mainevent-3">0</span>
+                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="increment(3)"><i class="material-icons">add</i></button>
+                  </span>
                 </div>
               </div>
               <div class="row valign-wrapper">
                 <div class="col s6 left">
-                  <span class="flow-text">Project Expo</span>
+                  <span class="flow-text">Project Expo (Max. 4 Persons)</span>
                 </div>
                 <div class="col s6 center">
-                  <label>
-                    <input type="checkbox" id="event-4" />
-                    <span></span>
-                  </label>
+                  <span class="custom-blue inline-block-display white-text">
+                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="decrement(4)"><i class="material-icons">remove</i></button>
+                    <span class="flow-text count-span center inline-block-display" id="mainevent-4">0</span>
+                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="increment(4)"><i class="material-icons">add</i></button>
+                  </span>
                 </div>
               </div>
               <div class="row valign-wrapper">
                 <div class="col s6 left">
-                  <span class="flow-text">Quizzing</span>
+                  <span class="flow-text">Larynx Warz (Max. 8 Persons)</span>
                 </div>
                 <div class="col s6 center">
-                  <label>
-                    <input type="checkbox" id="event-5" />
-                    <span></span>
-                  </label>
+                  <span class="custom-blue inline-block-display white-text">
+                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="decrement(5)"><i class="material-icons">remove</i></button>
+                    <span class="flow-text count-span center inline-block-display" id="mainevent-5">0</span>
+                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="increment(5)"><i class="material-icons">add</i></button>
+                  </span>
+                </div>
+              </div>
+              <div class="row valign-wrapper">
+                <div class="col s6 left">
+                  <span class="flow-text">Dance Wance (Max. 8 Persons)</span>
+                </div>
+                <div class="col s6 center">
+                  <span class="custom-blue inline-block-display white-text">
+                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="decrement(6)"><i class="material-icons">remove</i></button>
+                    <span class="flow-text count-span center inline-block-display" id="mainevent-6">0</span>
+                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="increment(6)"><i class="material-icons">add</i></button>
+                  </span>
+                </div>
+              </div>
+              <div class="row valign-wrapper">
+                <div class="col s6 left">
+                  <span class="flow-text">Art Salad (Max. 2 Persons)</span>
+                </div>
+                <div class="col s6 center">
+                  <span class="custom-blue inline-block-display white-text">
+                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="decrement(7)"><i class="material-icons">remove</i></button>
+                    <span class="flow-text count-span center inline-block-display" id="mainevent-7">0</span>
+                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="increment(7)"><i class="material-icons">add</i></button>
+                  </span>
+                </div>
+              </div>
+              <div class="row valign-wrapper">
+                <div class="col s6 left">
+                  <span class="flow-text">Theatre (Max. 2 Persons)</span>
+                </div>
+                <div class="col s6 center">
+                  <span class="custom-blue inline-block-display white-text">
+                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="decrement(8)"><i class="material-icons">remove</i></button>
+                    <span class="flow-text count-span center inline-block-display" id="mainevent-8">0</span>
+                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="increment(8)"><i class="material-icons">add</i></button>
+                  </span>
+                </div>
+              </div>
+              <div class="row valign-wrapper">
+                <div class="col s6 left">
+                  <span class="flow-text">Haute Couture(Fashion) (Max. 4 Persons)</span>
+                </div>
+                <div class="col s6 center">
+                  <span class="custom-blue inline-block-display white-text">
+                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="decrement(9)"><i class="material-icons">remove</i></button>
+                    <span class="flow-text count-span center inline-block-display" id="mainevent-9">0</span>
+                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="increment(9)"><i class="material-icons">add</i></button>
+                  </span>
                 </div>
               </div>
               <div class="row valign-wrapper">
@@ -240,7 +304,7 @@ function getCallbackUrl()
                 </div>
                 <div class="col s6 center">
                   <label>
-                    <input type="checkbox" id="event-6" />
+                    <input type="checkbox" id="mainevent-10" />
                     <span></span>
                   </label>
                 </div>
@@ -251,7 +315,7 @@ function getCallbackUrl()
                 </div>
                 <div class="col s6 center">
                   <label>
-                    <input type="checkbox" id="event-7" />
+                    <input type="checkbox" id="mainevent-11" />
                     <span></span>
                   </label>
                 </div>
@@ -262,7 +326,7 @@ function getCallbackUrl()
                 </div>
                 <div class="col s6 center">
                   <label>
-                    <input type="checkbox" id="event-8" />
+                    <input type="checkbox" id="mainevent-12" />
                     <span></span>
                   </label>
                 </div>
@@ -273,7 +337,7 @@ function getCallbackUrl()
                 </div>
                 <div class="col s6 center">
                   <label>
-                    <input type="checkbox" id="event-9" />
+                    <input type="checkbox" id="mainevent-13" />
                     <span></span>
                   </label>
                 </div>
@@ -284,7 +348,7 @@ function getCallbackUrl()
                 </div>
                 <div class="col s6 center">
                   <label>
-                    <input type="checkbox" id="event-10" />
+                    <input type="checkbox" id="mainevent-14" />
                     <span></span>
                   </label>
                 </div>
@@ -295,119 +359,27 @@ function getCallbackUrl()
                 </div>
                 <div class="col s6 center">
                   <label>
-                    <input type="checkbox" id="event-11" />
+                    <input type="checkbox" id="mainevent-15" />
                     <span></span>
                   </label>
                 </div>
               </div>
               <div class="row valign-wrapper">
                 <div class="col s6 left">
-                  <span class="flow-text">Flash Mob</span>
-                </div>
-                <div class="col s6 center">
-                  <label>
-                    <input type="checkbox" id="event-12" />
-                    <span></span>
-                  </label>
-                </div>
-              </div>
-              <div class="row valign-wrapper">
-                <div class="col s6 left">
-                  <span class="flow-text">Dance Battle</span>
-                </div>
-                <div class="col s6 center">
-                  <label>
-                    <input type="checkbox" id="event-13" />
-                    <span></span>
-                  </label>
-                </div>
-              </div>
-              <div class="row valign-wrapper">
-                <div class="col s6 left">
-                  <span class="flow-text">Treasure Hunt</span>
-                </div>
-                <div class="col s6 center">
-                  <label>
-                    <input type="checkbox" id="event-14" />
-                    <span></span>
-                  </label>
-                </div>
-              </div>
-              <div class="row valign-wrapper">
-                <div class="col s6 left">
-                  <span class="flow-text">Slow Bike Race</span>
-                </div>
-                <div class="col s6 center">
-                  <label>
-                    <input type="checkbox" id="event-15"/>
-                    <span></span>
-                  </label>
-                </div>
-              </div>
-              <div class="row valign-wrapper">
-                <div class="col s6 left">
-                  <span class="flow-text">Larynx Warz</span>
+                  <span class="flow-text">Accomodation</span>
                 </div>
                 <div class="col s6 center">
                   <span class="custom-blue inline-block-display white-text">
-                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="increment(1)"><i class="material-icons">add</i></button>
-                    <span class="flow-text count-span center inline-block-display" id="subevent-1">0</span>
-                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="decrement(1)"><i class="material-icons">remove</i></button>
-                  </span>
-                </div>
-              </div>
-              <div class="row valign-wrapper">
-                <div class="col s6 left">
-                  <span class="flow-text">Dance Wance</span>
-                </div>
-                <div class="col s6 center">
-                  <span class="custom-blue inline-block-display white-text">
-                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="increment(2)"><i class="material-icons">add</i></button>
-                    <span class="flow-text count-span center inline-block-display" id="subevent-2">0</span>
-                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="decrement(2)"><i class="material-icons">remove</i></button>
-                  </span>
-                </div>
-              </div>
-              <div class="row valign-wrapper">
-                <div class="col s6 left">
-                  <span class="flow-text">Pic O Rama</span>
-                </div>
-                <div class="col s6 center">
-                  <span class="custom-blue inline-block-display white-text">
-                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="increment(3)"><i class="material-icons">add</i></button>
-                    <span class="flow-text count-span center inline-block-display" id="subevent-3">0</span>
-                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="decrement(3)"><i class="material-icons">remove</i></button>
-                  </span>
-                </div>
-              </div>
-              <div class="row valign-wrapper">
-                <div class="col s6 left">
-                  <span class="flow-text">Theatre</span>
-                </div>
-                <div class="col s6 center">
-                  <span class="custom-blue inline-block-display white-text">
-                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="increment(4)"><i class="material-icons">add</i></button>
-                    <span class="flow-text count-span center inline-block-display" id="subevent-4">0</span>
-                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="decrement(4)"><i class="material-icons">remove</i></button>
-                  </span>
-                </div>
-              </div>
-              <div class="row valign-wrapper">
-                <div class="col s6 left">
-                  <span class="flow-text">Haute Couture(Fashion)</span>
-                </div>
-                <div class="col s6 center">
-                  <span class="custom-blue inline-block-display white-text">
-                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="increment(5)"><i class="material-icons">add</i></button>
-                    <span class="flow-text count-span center inline-block-display" id="subevent-5">0</span>
-                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="decrement(5)"><i class="material-icons">remove</i></button>
+                    <button class="waves-effect waves-light btn custom-blue left" type="button" onclick="decrement(16)"><i class="material-icons">remove</i></button>
+                    <span class="flow-text count-span center inline-block-display" id="mainevent-16">0</span>
+                    <button class="waves-effect waves-light btn custom-blue right" type="button" onclick="increment(16)"><i class="material-icons">add</i></button>
                   </span>
                 </div>
               </div>
             </div>
           </li>
         </ul>
-      
+
       <div class="container"></div>
       <div class="row valign-wrapper">
         <div class="col s6">
@@ -423,7 +395,19 @@ function getCallbackUrl()
     </div>
   </form>
   </main>
-  <div class="container"></div>
+  <div class="container">
+  <ul class="collapsible">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">list</i>Instructions</div>
+      <div class="collapsible-body">
+        <ul>
+          <li>* GST and Transaction charges will be applied at the time of payment.</li>
+          <li>* Please send a mail to <a href="mailto:ashvtheraceoftalent@gmail.com">Ashv (ashvtheraceoftalent@gmail.com)</a> mentioning the team details if are registering as a team.</li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+  </div>
 
   <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase-auth.js"></script>
@@ -439,7 +423,7 @@ function getCallbackUrl()
     };
     firebase.initializeApp(config);
   </script>
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="./js/index.js"></script>
 </body>
