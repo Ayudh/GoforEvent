@@ -29,6 +29,7 @@ if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0){
       }
     }
 
+    $data->amount = $data->amount * 1.03;
 		$hash=hash('sha512', $data->key.'|'.$data->txnid.'|'.$data->amount.'|'.$data->pinfo.'|'.$data->fname.'|'.$data->email.'|||||'.$data->udf5.'||||||'.$data->salt);
 		$json=array();
 		$json['success'] = $hash;
