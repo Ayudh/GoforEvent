@@ -112,7 +112,7 @@ function getCallbackUrl()
   <main>
     <form id="complete-form" action="#" method="get" class="col s12">
     <div class="container">
-    <h3 class="center">Ashv</h3>
+    <h3 class="center">Ashv the race of talent</h3>
     <marquee>Participate to win prizes worth upto 5 Lakhs</marquee>
         <ul class="collapsible popout expandable z-depth-3">
           <li>
@@ -345,7 +345,7 @@ function getCallbackUrl()
               </div>
               <div class="row valign-wrapper">
                 <div class="col s6 left">
-                  <span class="flow-text">Tennikoit(Men)</span>
+                  <span class="flow-text">Tennikoit(Women)</span>
                 </div>
                 <div class="col s6 center">
                   <label>
