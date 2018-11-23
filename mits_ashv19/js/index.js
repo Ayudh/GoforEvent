@@ -135,7 +135,7 @@ function updateAmount() {
       }
     } else {
       let curr = parseInt($('#mainevent-'+index).text());
-      amount = amount + 400 * curr;
+      amount = amount + 150 * curr;
     }
   }
   $('#final-amount').text(amount);

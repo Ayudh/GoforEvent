@@ -102,7 +102,7 @@ if (isset($postdata ['key'])) {
       } elseif ($i <= 19) {
         $finalamount = $finalamount + $info[$i] * $prices[$i-14];
       } else {
-        $finalamount = $finalamount + $info[$i] * 400;
+        $finalamount = $finalamount + $info[$i] * 150;
       }
     }
 
@@ -141,7 +141,7 @@ if (isset($postdata ['key'])) {
     } elseif ($i <= 19) {
       $finalamount = $finalamount + $info[$i] * $prices[$i-14];
     } else {
-      $finalamount = $finalamount + $info[$i] * 400;
+      $finalamount = $finalamount + $info[$i] * 150;
     }
   }
 

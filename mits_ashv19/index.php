@@ -25,7 +25,7 @@ if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0){
       } elseif ($i <= 19) {
         $data->amount = $data->amount + $events[$i] * $prices[$i-14];
       } else {
-        $data->amount = $data->amount + $events[$i] * 400;
+        $data->amount = $data->amount + $events[$i] * 150;
       }
     }
 
