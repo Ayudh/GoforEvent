@@ -17,6 +17,7 @@ CREATE TABLE `ashv_cse_people` (
 CREATE TABLE `ashv_cse_events` (
  `people_email` varchar(100) NOT NULL,
  `events_workshop` int(11) NOT NULL DEFAULT '0',
+ `events_multi_workshop` int(11) NOT NULL DEFAULT '0',
  `events_paper` int(11) NOT NULL DEFAULT '0',
  `events_poster` int(11) NOT NULL DEFAULT '0',
  `events_project` int(11) NOT NULL DEFAULT '0',

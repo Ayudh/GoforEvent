@@ -64,7 +64,7 @@ if (isset($postdata ['key'])) {
     echo $e->getMessage();
   }
 
-  $sql = "INSERT INTO `ashv_cse_events`(`people_email`, `events_workshop`, `events_paper`, `events_poster`, `events_project`, `events_cricket`, `events_volleym`, `events_kabaddi`, `events_football`, `events_tennikoit`, `events_volleyw`,  `events_larynx`, `events_dancewance`, `events_artsalad`, `events_theatre`, `events_haute`,`events_accom`, `people_amount`) VALUES (:people_email, :events_workshop, :events_paper, :events_poster, :events_project, :events_cricket, :events_volleym, :events_kabaddi, :events_football, :events_tennikoit, :events_volleyw, :events_larynx, :events_dancewance, :events_artsalad, :events_theatre, :events_haute,:events_accom, :people_amount)";
+  $sql = "INSERT INTO `ashv_cse_events`(`people_email`, `events_workshop`, `events_multi_workshop`, `events_paper`, `events_poster`, `events_project`, `events_cricket`, `events_volleym`, `events_kabaddi`, `events_football`, `events_tennikoit`, `events_volleyw`,  `events_larynx`, `events_dancewance`, `events_artsalad`, `events_theatre`, `events_haute`,`events_accom`, `people_amount`) VALUES (:people_email, :events_workshop, :events_multi_workshop, :events_paper, :events_poster, :events_project, :events_cricket, :events_volleym, :events_kabaddi, :events_football, :events_tennikoit, :events_volleyw, :events_larynx, :events_dancewance, :events_artsalad, :events_theatre, :events_haute,:events_accom, :people_amount)";
 
   try {
 
@@ -74,6 +74,7 @@ if (isset($postdata ['key'])) {
     $stmt->bindParam(':people_email', $email);
 
     $stmt->bindParam(':events_workshop', $info[5]);
+    $stmt->bindParam(':events_multi_workshop', $info[21]);
     $stmt->bindParam(':events_paper', $info[6]);
     $stmt->bindParam(':events_poster', $info[7]);
     $stmt->bindParam(':events_project', $info[8]);
@@ -95,7 +96,7 @@ if (isset($postdata ['key'])) {
     for ($i=5; $i < 21; $i++) {
       if ($i <= 13) {
         if ($i == 5 && $info[$i] != 0) {
-          $finalamount = $finalamount + 1300;
+          $finalamount = $finalamount + 3000;
         } else {
           $finalamount = $finalamount + 400 * $info[$i];
         }
@@ -104,6 +105,9 @@ if (isset($postdata ['key'])) {
       } else {
         $finalamount = $finalamount + $info[$i] * 150;
       }
+    }
+    if ($info[21] != 0) {
+      $finalamount = $finalamount + 1300;
     }
 
     $stmt->bindParam(':people_amount', $finalamount);
@@ -121,11 +125,11 @@ if (isset($postdata ['key'])) {
 
   $result = $stmt->fetchAll();
 
-  $x = "events_workshop.events_paper.events_poster.events_project.events_larynx.events_dancewance.events_artsalad.events_theatre.events_haute.events_cricket.events_volleym.events_kabaddi.events_football.events_tennikoit.events_volleyw.events_accom";
+  $x = "events_workshop.events_multi_workshop.events_paper.events_poster.events_project.events_larynx.events_dancewance.events_artsalad.events_theatre.events_haute.events_cricket.events_volleym.events_kabaddi.events_football.events_tennikoit.events_volleyw.events_accom";
 
   $arr1 = explode('.', $x);
 
-  for ($i = 5; $i < 21; $i++) {
+  for ($i = 5; $i < 22; $i++) {
     $info[$i] = $info[$i] + $result[0][$arr1[$i-5]];
   }
 
@@ -134,7 +138,7 @@ if (isset($postdata ['key'])) {
   for ($i=5; $i < 21; $i++) {
     if ($i <= 13) {
       if ($i == 5 && $info[$i] != 0) {
-        $finalamount = $finalamount + 1300;
+        $finalamount = $finalamount + 3000;
       } else {
         $finalamount = $finalamount + 400 * $info[$i];
       }
@@ -144,8 +148,11 @@ if (isset($postdata ['key'])) {
       $finalamount = $finalamount + $info[$i] * 150;
     }
   }
+  if ($info[21] != 0) {
+    $finalamount = $finalamount + 1300;
+  }
 
-  $sql = "UPDATE `ashv_cse_events` SET `events_workshop`=:events_workshop,`events_paper`=:events_paper,`events_poster`=:events_poster,`events_project`=:events_project,`events_cricket`=:events_cricket,`events_volleym`=:events_volleym,`events_kabaddi`=:events_kabaddi,`events_football`=:events_football,`events_tennikoit`=:events_tennikoit,`events_volleyw`=:events_volleyw,`events_larynx`=:events_larynx,`events_dancewance`=:events_dancewance,`events_artsalad`=:events_artsalad,`events_theatre`=:events_theatre,`events_haute`=:events_haute,`events_accom`=:events_accom,`people_amount`=:people_amount WHERE `people_email`=:people_email";
+  $sql = "UPDATE `ashv_cse_events` SET `events_workshop`=:events_workshop, `events_multi_workshop`=:events_multi_workshop, `events_paper`=:events_paper,`events_poster`=:events_poster,`events_project`=:events_project,`events_cricket`=:events_cricket,`events_volleym`=:events_volleym,`events_kabaddi`=:events_kabaddi,`events_football`=:events_football,`events_tennikoit`=:events_tennikoit,`events_volleyw`=:events_volleyw,`events_larynx`=:events_larynx,`events_dancewance`=:events_dancewance,`events_artsalad`=:events_artsalad,`events_theatre`=:events_theatre,`events_haute`=:events_haute,`events_accom`=:events_accom,`people_amount`=:people_amount WHERE `people_email`=:people_email";
 
   $db = new db();
   $conn = $db->connect();
@@ -153,6 +160,7 @@ if (isset($postdata ['key'])) {
   $stmt->bindParam(':people_email', $email);
 
   $stmt->bindParam(':events_workshop', $info[5]);
+  $stmt->bindParam(':events_multi_workshop', $info[21]);
   $stmt->bindParam(':events_paper', $info[6]);
   $stmt->bindParam(':events_poster', $info[7]);
   $stmt->bindParam(':events_project', $info[8]);

@@ -39,8 +39,8 @@
 	  }
 	  else
 	  {
-      $x = "events_workshop.events_paper.events_poster.events_project.events_larynx.events_dancewance.events_artsalad.events_theatre.events_haute.events_cricket.events_volleym.events_kabaddi.events_football.events_tennikoit.events_volleyw.events_accom";
-        $y = "Workshop.Paper Presentation.Poster Presentation.Project Expo.Larynx Warz.Dance Wance.Pic O Rama.Theatre.Haute Couture(Fashion).Cricket(Men).Volley ball(Men).Kabbadi(Men).Football(Men).Tennikoit(Men).Volleyball(Women).Accomodation";
+      $x = "events_workshop.events_multi_workshop.events_paper.events_poster.events_project.events_larynx.events_dancewance.events_artsalad.events_theatre.events_haute.events_cricket.events_volleym.events_kabaddi.events_football.events_tennikoit.events_volleyw.events_accom";
+        $y = "Workshop.Workshop.Paper Presentation.Poster Presentation.Project Expo.Larynx Warz.Dance Wance.Pic O Rama.Theatre.Haute Couture(Fashion).Cricket(Men).Volley ball(Men).Kabbadi(Men).Football(Men).Tennikoit(Men).Volleyball(Women).Accomodation";
      ?>
 	 <body style="background-color:#2C3E50;color:white">
 	 <h1 style="text-align:center;font-size:50px;margin-top:30px;font-family:arial"> Your registered Events<h1>
@@ -60,7 +60,7 @@
 	 <?PHP
 	  $arr1 = explode('.', $x);
 	  	  $arr2 = explode('.', $y);
-      for ($i = 0; $i < 16; $i++) {
+      for ($i = 0; $i < 17; $i++) {
 		  ?>
 		  <tr>
 		 <td><?php echo $arr2[$i];?></td><td style="text-align:center"><?php echo $result[0][$arr1[$i]];?></td>

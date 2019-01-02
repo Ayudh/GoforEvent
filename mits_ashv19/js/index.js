@@ -125,7 +125,7 @@ function updateAmount() {
     if (index <= 9) {
       let curr = parseInt($('#mainevent-'+index).text());
       if (index == 1 && curr != 0) {
-        amount = amount + 1300;
+        amount = amount + 3000;
       } else {
         amount = amount + 400 * curr;
       }
@@ -138,13 +138,15 @@ function updateAmount() {
       amount = amount + 150 * curr;
     }
   }
+  let workshopSelected = +$('#workshop :selected').val();
+  if (workshopSelected !== 0) {
+    amount = amount + 1300;
+  }
   $('#final-amount').text(amount);
 }
 
 $('#complete-form').submit(function (evt) {
   evt.preventDefault();
-  //console.log('form submitted');
-
   if (firebase.auth().currentUser == null) {
     toast('Please login');
     return;
@@ -178,6 +180,7 @@ $('#complete-form').submit(function (evt) {
       productInfo += $('#mainevent-'+index).text() + '#';
     }
   }
+  productInfo += $('#workshop :selected').val() + '#';
 
   $.ajax({
     url: 'index.php',

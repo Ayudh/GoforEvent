@@ -12,7 +12,7 @@
 
   // $stmt = $conn->query($sql);
       $result = $stmt->fetchAll();
-      $x = "people_id.people_name.people_email.people_roll.people_campusid.people_amount.people_mobile.people_branch.people_gender.people_college.people_date.people_txid.people_status.events_workshop.events_paper.events_poster.events_project.events_larynx.events_dancewance.events_artsalad.events_theatre.events_haute.events_cricket.events_volleym.events_kabaddi.events_football.events_tennikoit.events_volleyw.events_accom";
+      $x = "people_id.people_name.people_email.people_roll.people_campusid.people_amount.people_mobile.people_branch.people_gender.people_college.people_date.people_txid.people_status.events_workshop.events_multi_workshop.events_paper.events_poster.events_project.events_larynx.events_dancewance.events_artsalad.events_theatre.events_haute.events_cricket.events_volleym.events_kabaddi.events_football.events_tennikoit.events_volleyw.events_accom";
      ?>
 	 <body style="background-color:#2C3E50;color:white">
 	 <h1 style="text-align:center;font-size:50px;margin-top:30px;font-family:arial"> Candidates List<h1>
@@ -44,6 +44,7 @@
 		<th>Status</th>
 
 		<th>Workshop</th>
+		<th>Drop Workshop</th>
 		<th>Paper Presentation</th>
 		<th>Poster Presentation</th>
 		<th>Project Expo</th>

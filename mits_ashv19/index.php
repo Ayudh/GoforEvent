@@ -18,7 +18,7 @@ if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0){
     for ($i=5; $i < 21; $i++) {
       if ($i <= 13) {
         if ($i == 5 && $events[$i] != 0) {
-          $data->amount = $data->amount + 1300;
+          $data->amount = $data->amount + 3000;
         } else {
           $data->amount = $data->amount + 400 * $events[$i];
         }
@@ -27,6 +27,10 @@ if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0){
       } else {
         $data->amount = $data->amount + $events[$i] * 150;
       }
+    }
+    
+    if ($events[21] != 0) {
+      $data->amount = $data->amount + 1300;
     }
 
     $data->amount = $data->amount * 1.03;
@@ -67,9 +71,9 @@ function getCallbackUrl()
   <!-- this meta viewport is required for BOLT //-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
   <!-- BOLT Sandbox/test //-->
-  <!-- <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script> -->
+  <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script>
 <!-- BOLT Production/Live // -->
-<script id="bolt" src="https://checkout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script>
+<!-- <script id="bolt" src="https://checkout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script> -->
 </head>
 
 <body>
@@ -193,7 +197,7 @@ function getCallbackUrl()
             <div class="collapsible-body">
               <div class="row valign-wrapper">
                 <div class="col s6 left">
-                  <span class="flow-text">Workshop</span>
+                  <span class="flow-text">Design Thinking Workshop</span>
                 </div>
                 <div class="col s6 center">
                   <span class="custom-blue inline-block-display white-text">
@@ -203,6 +207,22 @@ function getCallbackUrl()
                   </span>
                 </div>
               </div>
+              <div class="row valign-wrapper">
+                <div class="input-field col m12">
+                  <i class="material-icons prefix">library_books</i>
+                  <select name="workshop" id="workshop" required onchange='updateAmount()'>
+                    <option value="0" selected>None</option>
+                    <option value="1">Quad copter</option>
+                    <option value="2">3D Printer</option>
+                    <option value="3">Mini Robot</option>
+                    <option value="4">Ethical Hacking and Cyber Security</option>
+                    <option value="5">Digital marketing and Web Design</option>
+                    <option value="6">Augmented reality</option>
+                  </select>
+                  <label>Workshop</label>
+                </div>
+              </div>
+
               <div class="row valign-wrapper">
                 <div class="col s6 left">
                   <span class="flow-text">Paper Presentation (Max. 2 Persons)</span>
