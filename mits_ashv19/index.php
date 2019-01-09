@@ -1,19 +1,19 @@
 <?php
 
 if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0){
-	//Request hash
-	$contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+  //Request hash
+  $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 	if(strcasecmp($contentType, 'application/json') == 0){
     $data = json_decode(file_get_contents('php://input'));
     $data->key = 'lH3qHLzS';
     $data->salt = '8QcIRCig2E';
 
     $data->amount = 0;
-    
+
     $events=explode('#',$data->pinfo);
-    
+
     $productInfo = $data->pinfo;
-    
+
     $prices = [1500, 1300, 1300, 1000, 700, 1300];
     for ($i=5; $i < 21; $i++) {
       if ($i <= 13) {
@@ -28,7 +28,7 @@ if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') == 0){
         $data->amount = $data->amount + $events[$i] * 150;
       }
     }
-    
+
     if ($events[21] != 0) {
       $data->amount = $data->amount + 1300;
     }
@@ -207,7 +207,7 @@ function getCallbackUrl()
                   </span>
                 </div>
               </div>
-              <div class="row valign-wrapper">
+              <!-- <div class="row valign-wrapper">
                 <div class="input-field col m12">
                   <i class="material-icons prefix">library_books</i>
                   <select name="workshop" id="workshop" required onchange='updateAmount()'>
@@ -221,7 +221,25 @@ function getCallbackUrl()
                   </select>
                   <label>Workshop</label>
                 </div>
+              </div> -->
+
+              <div class="row valign-wrapper">
+                <div class="col s6 m8 left">
+                  <span class="flow-text">Workshop</span>
+                </div>
+                <div class="col s6 m4 center">
+                  <select name="workshop" id="workshop" required onchange='updateAmount()'>
+                    <option value="0" selected>None</option>
+                    <option value="1">Quad copter</option>
+                    <option value="2">3D Printer</option>
+                    <option value="3">Mini Robot</option>
+                    <option value="4">Ethical Hacking and Cyber Security</option>
+                    <option value="5">Digital marketing and Web Design</option>
+                    <option value="6">Augmented reality</option>
+                  </select>
+                </div>
               </div>
+
 
               <div class="row valign-wrapper">
                 <div class="col s6 left">
